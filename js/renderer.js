@@ -82,6 +82,7 @@ Renderer = function(canvas) {
 				if(nearestP.distance < 20){
 					selected = nearest = dragged = nearestP;
 				}
+				that.printInfo(selected);
 
 				if (selected) {
 					dragged.node.fixed = true;
@@ -125,6 +126,16 @@ Renderer = function(canvas) {
 			});
 
 		},
+		printInfo : function(selectedSubject) {
+			if(selectedSubject) {
+				g_selectedSubject = g_subjects[selectedSubject.node.name];
+				$('#SelectedSubject').fadeIn();
+				$('#SubjectName').text(g_selectedSubject.Name);
+				$('#SubjectDescr').text(g_selectedSubject.Description);
+			} else {
+				$('#SelectedSubject').fadeOut();
+			}
+		}
 	}
 	return that;
 }
