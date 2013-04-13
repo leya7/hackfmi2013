@@ -1,0 +1,31 @@
+<!doctype html>
+<html ng-app>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="style/reasons_to_study.css" type="text/css">
+  </head>
+  <body class="grab_excess_space">
+
+    <canvas class="grab_excess_space" id="viewport" width="1024" height="600"></canvas>
+
+    <div ng-controller="FairyCtrl">
+      <label>Name:</label>
+      <form ng-submit="getProgramme()">
+        <input type="text" id="programme" placeholder="programme">
+        <input type="submit" value="it">
+      </form>
+      <ul>
+        <li ng-repeat="subject in subjects">
+          <span>  {{subject}} </span>
+          </li>
+      </ul>
+    </div>
+
+
+    <script src="js/main_arbor.js"></script>
+    <script src="libs/arbor.js"></script>
+
+  </body>
+</html>
