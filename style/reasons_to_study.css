@@ -1,0 +1,17 @@
+body {
+}
+
+.grab_excess_space
+{
+    position: relative; absolute;
+    top: 200;
+    bottom: 60;
+    left: 50;
+    right: 0;
+}
+
+#viewport
+{
+    margin: auto;
+    border: 2px solid gray;
+}
