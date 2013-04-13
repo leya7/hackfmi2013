@@ -7,3 +7,8 @@ html, body {
 canvas { 
  border: 0px none black;
 }
+
+#SelectedSubject {
+	float: right;
+	width: 18%;
+}

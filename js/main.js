@@ -28,7 +28,8 @@ el = 2;//new Everlive('RhGb6ryktMNcAwj9');
 function FairyCtrl($scope){
     $scope.subjects = ['d', 'e'];
     $scope.edges = [];
-    $scope.nodes = {};
+    g_subjects = {};
+	g_nodes = {};
 	$scope.aliases = [];
 	$scope.majors = [];
 //debugger;
@@ -39,11 +40,11 @@ function FairyCtrl($scope){
 		//console.log($("#Majors1").find(':selected').val()+111);
         $scope.edges = [];
         $scope.subjects = [];
-        $scope.nodes = {};
 
         $.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Major/',
             type: "GET",
+			dataType: 'json',
             headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
                       "X-Everlive-Filter" : JSON.stringify(filter)},
             success: function(data){
@@ -72,6 +73,7 @@ function FairyCtrl($scope){
 		$.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Alias/',
             type: "GET",
+			dataType: 'json',
             headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
                       "X-Everlive-Filter" : JSON.stringify(filter)},
             success: function(data){
@@ -98,6 +100,7 @@ function FairyCtrl($scope){
         $.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Major',
             type: "GET",
+			dataType: 'json',
             headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0"},
             success: function(data) {
 				$scope.$apply(function() {
@@ -123,6 +126,7 @@ function FairyCtrl($scope){
         $.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Subject',
             type: "GET",
+			dataType: 'json',
             headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
                       "X-Everlive-Filter" : JSON.stringify(filter)},
             success: function(data){
@@ -142,9 +146,10 @@ function FairyCtrl($scope){
 					}
 
 
-                    $scope.nodes[subjects[i].Name] = sys.addNode(
+                    g_nodes[subjects[i].Name] = sys.addNode(
                         subjects[i].Name,
                         {'label' : subjects[i].Name});
+					g_subjects[subjects[i].Name] = subjects[i];
 
                     for(var j = i + 1;j < subjects.length;j++){
 
@@ -175,8 +180,8 @@ function FairyCtrl($scope){
     $scope.drawEdges = function(){
         for(var d = 0;d < $scope.edges.length;d++){
             sys.addEdge(
-                $scope.nodes[$scope.edges[d][0].Name],
-                $scope.nodes[$scope.edges[d][1].Name],
+                g_nodes[$scope.edges[d][0].Name],
+                g_nodes[$scope.edges[d][1].Name],
 				$scope.edges[d][2].Provides);
         }
     };
