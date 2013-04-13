@@ -26,10 +26,11 @@ el = 2;//new Everlive('RhGb6ryktMNcAwj9');
 function FairyCtrl($scope){
     $scope.subjects = ['d', 'e'];
     $scope.edges = [];
+	$scope.majorsNames = [];
 
-    $scope.getProgramme = function(){
+    $scope.getMajor = function(){
 
-        var filter = { "Name" : $("#programme").val() };
+        var filter = { "Name" : $("#major").val() };
 
         $.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Major/',
@@ -46,6 +47,29 @@ function FairyCtrl($scope){
                     $scope.subjects.push(data.Result[0].Subjects[i]);
                 }
                 $scope.getSubjects(data.Result[0].Subjects);
+            },
+            error: function(error){
+                alert(JSON.stringify(error));
+            }
+        });
+    };
+
+    $scope.getAllMajors = function(){
+        $.ajax({
+            url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Major',
+            type: "GET",
+            headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0"},
+            success: function(data) {
+				$scope.$apply(function() {
+					var majors = data.Result;
+
+					for(var i = 0; i < majors.length; i++){
+						$scope.majorsNames.push(majors[i].Name);
+					}
+					for(var i = 0; i < $scope.majorsNames.length; i++){
+						console.log($scope.majorsNames[i]);
+					}
+				});
             },
             error: function(error){
                 alert(JSON.stringify(error));
@@ -101,6 +125,8 @@ function FairyCtrl($scope){
                             {'label' : $scope.edges[d][1].Name}));
         }
     };
+	
+	setTimeout(function() {$scope.getAllMajors()}, 0);
 }
 
 
