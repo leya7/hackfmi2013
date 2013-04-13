@@ -1,9 +1,16 @@
 $(document).ready(function(){
+	//$("#Majors1").val("Приложна математика");
+
      sys = arbor.ParticleSystem(1000, 400,1);
      sys.renderer = Renderer('#viewport');
      sys.parameters({gravity : true});
 });
 
+$(document).load(function(){
+	 $("#Majors1").val("Приложна математика");
+	 Console.log('ggg'+$scope);
+	 $scope.$apply(getMajor);
+});
 
 function can_be_used_by(x, y){
     /* determines if knowledge from subject x can be used by
@@ -35,7 +42,8 @@ function FairyCtrl($scope){
 
     $scope.getMajor = function(){
 
-        var filter = { "Name" : $("#major").val() };
+        var filter = { "Name" : $("#Majors1").find(':selected').val() };
+		Console.log(filter);
         $scope.edges = [];
         $scope.subjects = [];
         $scope.nodes = {};
@@ -64,7 +72,7 @@ function FairyCtrl($scope){
 
     $scope.getAliases = function () {
 
-		var filter = { "Major" : $("#programme").val() };
+		var filter = { "Major" : $("#Majors1").find(':selected').val() };
 
 		$.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Alias/',

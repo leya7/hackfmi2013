@@ -1,12 +1,12 @@
 Renderer = function(canvas) {
 	var canvas = $(canvas).get(0);
-	
-	var radius = 35;
-	
+
 	var ctx = canvas.getContext("2d");
 	var particleSystem = null;
 
 	ctx.font = "20px Verdana";
+	ctx.canvas.width  = window.innerWidth*0.8;
+	ctx.canvas.height = window.innerHeight*0.8;
 
 	var that = {
 		init : function(system) {
@@ -79,7 +79,7 @@ Renderer = function(canvas) {
 				};
 				var nearestP = particleSystem.nearest(mouseP);
 				
-				if(nearestP.distance < radius){
+				if(nearestP.distance < 20){
 					selected = nearest = dragged = nearestP;
 				}
 
@@ -128,3 +128,4 @@ Renderer = function(canvas) {
 	}
 	return that;
 }
+
