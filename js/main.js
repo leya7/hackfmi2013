@@ -26,7 +26,7 @@ el = 2;//new Everlive('RhGb6ryktMNcAwj9');
 function FairyCtrl($scope){
     $scope.subjects = ['d', 'e'];
     $scope.edges = [];
-	$scope.majorsNames = [];
+	$scope.majors = [];
 
     $scope.getMajor = function(){
 
@@ -64,10 +64,7 @@ function FairyCtrl($scope){
 					var majors = data.Result;
 
 					for(var i = 0; i < majors.length; i++){
-						$scope.majorsNames.push(majors[i].Name);
-					}
-					for(var i = 0; i < $scope.majorsNames.length; i++){
-						console.log($scope.majorsNames[i]);
+						$scope.majors.push(majors[i]);
 					}
 				});
             },
