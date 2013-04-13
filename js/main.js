@@ -1,9 +1,16 @@
 $(document).ready(function(){
+	//$("#Majors1").val("Приложна математика");
+
      sys = arbor.ParticleSystem(1000, 400,1);
      sys.renderer = Renderer('#viewport');
      sys.parameters({gravity : true});
 });
 
+$(document).load(function(){
+	 $("#Majors1").val("Приложна математика");
+	 Console.log('ggg'+$scope);
+	 $scope.$apply(getMajor);
+});
 
 function can_be_used_by(x, y){
     /* determines if knowledge from subject x can be used by
@@ -21,16 +28,25 @@ function can_be_used_by(x, y){
     }
 }
 
+
+
 el = 2;//new Everlive('RhGb6ryktMNcAwj9');
+
 
 function FairyCtrl($scope){
     $scope.subjects = ['d', 'e'];
     $scope.edges = [];
+    $scope.nodes = {};
+	$scope.aliases = [];
 	$scope.majors = [];
 
     $scope.getMajor = function(){
 
-        var filter = { "Name" : $("#major").val() };
+        var filter = { "Name" : $("#Majors1").find(':selected').val() };
+		Console.log(filter);
+        $scope.edges = [];
+        $scope.subjects = [];
+        $scope.nodes = {};
 
         $.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Major/',
@@ -46,7 +62,52 @@ function FairyCtrl($scope){
                 for(i = 0;i < data.Result[0].Subjects.length; i++){
                     $scope.subjects.push(data.Result[0].Subjects[i]);
                 }
-                $scope.getSubjects(data.Result[0].Subjects);
+                $scope.getAliases();
+            },
+            error: function(error){
+                alert(JSON.stringify(error));
+            }
+        });
+    };
+
+    $scope.getAllMajors = function(){
+        $.ajax({
+            url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Major',
+            type: "GET",
+            headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0"},
+            success: function(data) {
+				$scope.$apply(function() {
+					var majors = data.Result;
+
+					for(var i = 0; i < majors.length; i++){
+						$scope.majors.push(majors[i]);
+					}
+				});
+            },
+            error: function(error){
+                alert(JSON.stringify(error));
+            }
+        });
+    };
+    $scope.getSubjects = function(names){
+		var filter = { "Major" : $("#Majors1").find(':selected').val() };
+
+		$.ajax({
+            url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Alias/',
+            type: "GET",
+            headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
+                      "X-Everlive-Filter" : JSON.stringify(filter)},
+            success: function(data){
+
+                if(data.Count === 0){
+                  return;
+                }
+
+                for(i = 0; i < data.Result.length; i++){
+					$scope.aliases.push(data.Result[i]);
+                }
+
+				$scope.getSubjects();
             },
             error: function(error){
                 alert(JSON.stringify(error));
@@ -74,9 +135,9 @@ function FairyCtrl($scope){
         });
     };
 
-    $scope.getSubjects = function(names){
+	$scope.getSubjects = function(){
 
-        var filter = { "Name" : { "$in" : names } };
+        var filter = { "Name" : { "$in" : $scope.subjects } };
 
         $.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Subject',
@@ -87,18 +148,32 @@ function FairyCtrl($scope){
                 var subjects = data.Result; //[0].Subjects;
 
                 for(var i = 0; i < subjects.length;i++){
+
+					for(var j=0; j < $scope.aliases.length; j++){
+
+                    	if (subjects[i].Name == $scope.aliases[j].Subject) {
+							subjects[i].Name = $scope.aliases[j].Name;
+							break;
+						}
+					}
+
+
+                    $scope.nodes[subjects[i].Name] = sys.addNode(
+                        subjects[i].Name,
+                        {'label' : subjects[i].Name});
+
                     for(var j = i + 1;j < subjects.length;j++){
 
                         if(can_be_used_by(subjects[i], subjects[j])){
-                            $scope.edges.push([subjects[i], subjects[j]]);
+                            $scope.edges.push([subjects[i], subjects[j], subjects[i]]);
                         }
                         if(can_be_used_by(subjects[j], subjects[i])){
-                            $scope.edges.push([subjects[j], subjects[i]]);
+                            $scope.edges.push([subjects[j], subjects[i], subjects[j]]);
                         }
                     }
                 }
 
-                console.log($scope.edges);
+                //console.log($scope.edges);
                 $scope.drawEdges();
 
                 /* debug
@@ -116,10 +191,9 @@ function FairyCtrl($scope){
     $scope.drawEdges = function(){
         for(var d = 0;d < $scope.edges.length;d++){
             sys.addEdge(
-                sys.addNode($scope.edges[d][0].Name,
-                            {'label' : $scope.edges[d][0].Name}),
-                sys.addNode($scope.edges[d][1].Name,
-                            {'label' : $scope.edges[d][1].Name}));
+                $scope.nodes[$scope.edges[d][0].Name],
+                $scope.nodes[$scope.edges[d][1].Name],
+				$scope.edges[d][2].Provides);
         }
     };
 	

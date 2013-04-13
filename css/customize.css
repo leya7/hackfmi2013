@@ -1,0 +1,15 @@
+.specbtn {
+
+vertical-align: middle;
+padding-right: 2px;
+padding-bottom: 5px;
+}
+.specwidth{
+padding-bottom: 5px;
+}
+
+.specbtn a{
+	height: 40px;
+	width: 90%;
+	text-align: center;
+}
