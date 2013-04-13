@@ -1,68 +1,114 @@
-(function($) {
+$(document).ready(function(){
+     sys = arbor.ParticleSystem(1000, 400,1);
+     sys.renderer = Renderer('#viewport');
+     sys.parameters({gravity : true});
+});
 
-	Renderer = function(canvas) {
-		var canvas = $(canvas).get(0)
-		
-		var ctx = canvas.getContext("2d");
-		var particleSystem = null
-		
-		ctx.font="20px Arial";
-		
-		var that = {
-			init : function(system) {
 
-				particleSystem = system
-				particleSystem.screenSize(canvas.width, canvas.height)
-				particleSystem.screenPadding(100)
+function can_be_used_by(x, y){
+    /* determines if knowledge from subject x can be used by
+       other subject y
+       (when x provides a tag on which y depends)
+    */
+    provides_length = (x.Provides ? x.Provides.length : 0);
+    depends_length = (y.Depends ? y.Depends.length : 0);
+    for(var d = 0; d < provides_length;d++){
+        for(var e = 0;e < depends_length;e++){
+            if(x.Provides[d] == y.Depends[e]){
+                return true;
+            }
+        }
+    }
+}
 
-			},
-			redraw : function() {
-				ctx.clearRect(0, 0, canvas.width, canvas.height)
-				
-				//edge is a line and pt1 and pt2 are the position of two points that describe the line
-				particleSystem.eachEdge(function(edge, pt1, pt2) {
-					// this is how we set in which color to draw
-					ctx.strokeStyle = "rgba(0,0,0, .7)"
+//el = new Everlive('RhGb6ryktMNcAwj9');
 
-					ctx.lineWidth = 1 + 6 * edge.data.weight
-					ctx.beginPath()
+function FairyCtrl($scope){
+    $scope.subjects = ['d', 'e'];
+    $scope.edges = [];
+    $scope.nodes = {};
 
-					ctx.moveTo(pt1.x, pt1.y)
-					ctx.lineTo(pt2.x, pt2.y)
+    $scope.getProgramme = function(){
 
-					ctx.stroke()
-				})
+        var filter = { "Name" : $("#programme").val() };
+        $scope.edges = [];
+        $scope.subjects = [];
+        $scope.nodes = {};
 
-				//node is the object from data and pt is the position of the element in the frame
-				particleSystem.eachNode(function(node, pt) {
-					
-					var w = 20
-					var offset = w / 2
-					
-					
-					ctx.fillStyle = node.data.color;
-					ctx.fillRect(pt.x - offset, pt.y - offset, offset, offset)
-					
-					//this is how we get the width of the text so we can calculate an offset
-					var textOffset = ctx.measureText(node.data.color).width / 1.5
-					ctx.fillText(node.data.color, pt.x - textOffset, pt.y - offset)
-					
-				})
-			}
-		}
-		return that
-	}
+        $.ajax({
+            url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Major/',
+            type: "GET",
+            headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
+                      "X-Everlive-Filter" : JSON.stringify(filter)},
+            success: function(data){
 
-	$(document).ready(function() {
-		var sys = arbor.ParticleSystem(1000, 800, 0.3) // create the system with sensible repulsion/stiffness/friction
-		
-		sys.renderer = Renderer("#viewport")// our newly created renderer will have its .init() method called shortly by sys...
-		
-		var data = $.getJSON('data.json', function(data) {
-			sys.graft({
-				nodes : data.nodes,
-				edges : data.edges
-			})
-		})
-	})
-})(this.jQuery)
+                if(data.Count === 0){
+                  return;
+                }
+
+                for(i = 0;i < data.Result[0].Subjects.length; i++){
+                    $scope.subjects.push(data.Result[0].Subjects[i]);
+                }
+                $scope.getSubjects(data.Result[0].Subjects);
+            },
+            error: function(error){
+                alert(JSON.stringify(error));
+            }
+        });
+    };
+
+    $scope.getSubjects = function(names){
+
+        var filter = { "Name" : { "$in" : names } };
+
+        $.ajax({
+            url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Subject',
+            type: "GET",
+            headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
+                      "X-Everlive-Filter" : JSON.stringify(filter)},
+            success: function(data){
+                var subjects = data.Result; //[0].Subjects;
+
+                for(var i = 0; i < subjects.length;i++){
+                    $scope.nodes[subjects[i].Name] = sys.addNode(
+                        subjects[i].Name,
+                        {'label' : subjects[i].Name});
+
+                    for(var j = i + 1;j < subjects.length;j++){
+
+                        if(can_be_used_by(subjects[i], subjects[j])){
+                            $scope.edges.push([subjects[i], subjects[j]]);
+                        }
+                        if(can_be_used_by(subjects[j], subjects[i])){
+                            $scope.edges.push([subjects[j], subjects[i]]);
+                        }
+                    }
+                }
+
+                console.log($scope.edges);
+                $scope.drawEdges();
+
+                /* debug
+                for(var d = 0;d < $scope.edges.length;d++){
+                    var edge = $scope.edges[d];
+                    console.log(edge[0].Name + ' ' + edge[1].Name);
+                };*/
+            },
+            error: function(error){
+                alert(JSON.stringify(error));
+            }
+        });
+    };
+
+    $scope.drawEdges = function(){
+        for(var d = 0;d < $scope.edges.length;d++){
+            sys.addEdge(
+                $scope.nodes[$scope.edges[d][0].Name],
+                $scope.nodes[$scope.edges[d][1].Name]);
+        }
+    };
+}
+
+
+
+
