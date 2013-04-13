@@ -31,7 +31,7 @@ function FairyCtrl($scope){
         var filter = { "Name" : $("#programme").val() };
 
         $.ajax({
-            url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Programme/',
+            url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Major/',
             type: "GET",
             headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
                       "X-Everlive-Filter" : JSON.stringify(filter)},
@@ -53,7 +53,7 @@ function FairyCtrl($scope){
     };
 
     $scope.getSubjects = function(names){
-        var filter = { "Name" : { "$nin" : ['ООП'] } };
+        var filter = { "Name" : { "$in" : names} };
         $.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Subject',
             type: "GET",
