@@ -66,28 +66,7 @@ function FairyCtrl($scope){
         });
     };
 
-    $scope.getAllMajors = function(){
-        $.ajax({
-            url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Major',
-            type: "GET",
-            headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0"},
-            success: function(data) {
-				$scope.$apply(function() {
-					var majors = data.Result;
-
-		//var filter = { "Major" : $("#Majors1").find(':selected').val() };
-		var filter = { "Major" : "Компютърни Науки" };
-					for(var i = 0; i < majors.length; i++){
-						$scope.majors.push(majors[i]);
-					}
-				});
-            },
-            error: function(error){
-                alert(JSON.stringify(error));
-            }
-        });
-    };
-    $scope.getSubjects = function(names){
+    $scope.getAliases = function(names){
 		var filter = { "Major" : $("#Majors1").find(':selected').val() };
 
 		$.ajax({
