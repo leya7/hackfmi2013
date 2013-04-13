@@ -16,10 +16,15 @@
         <option ng-repeat="major in majors" value= {{major.Name}}>
           <span>  {{major.Name}} </span>
         </option>
+		<option value="Компютърни Науки" selected="true">
+          <span> Компютърни Науки</span>
+        </option>
       </select>
     </div>
   
     <canvas class="grab_excess_space" id="viewport" ></canvas>
+	
+	<div id="Description1"></div>
 
     <script src="js/renderer.js"></script>
     <script src="libs/arbor.js"></script>

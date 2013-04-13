@@ -1,15 +1,7 @@
 $(document).ready(function(){
-	//$("#Majors1").val("Приложна математика");
-
      sys = arbor.ParticleSystem(1000, 400,1);
      sys.renderer = Renderer('#viewport');
      sys.parameters({gravity : true});
-});
-
-$(document).load(function(){
-	 $("#Majors1").val("Приложна математика");
-	 Console.log('ggg'+$scope);
-	 $scope.$apply(getMajor);
 });
 
 function can_be_used_by(x, y){
@@ -29,7 +21,6 @@ function can_be_used_by(x, y){
 }
 
 
-
 el = 2;//new Everlive('RhGb6ryktMNcAwj9');
 
 
@@ -39,11 +30,12 @@ function FairyCtrl($scope){
     $scope.nodes = {};
 	$scope.aliases = [];
 	$scope.majors = [];
-
+//debugger;
     $scope.getMajor = function(){
-
-        var filter = { "Name" : $("#Majors1").find(':selected').val() };
-		Console.log(filter);
+	
+        //var filter = { "Name" : $("#Majors1").find(':selected').val() };
+		var filter = { "Name" : "Компютърни Науки" };
+		//console.log($("#Majors1").find(':selected').val()+111);
         $scope.edges = [];
         $scope.subjects = [];
         $scope.nodes = {};
@@ -55,12 +47,15 @@ function FairyCtrl($scope){
                       "X-Everlive-Filter" : JSON.stringify(filter)},
             success: function(data){
 
-                if(data.Count === 0){
+				//var parsedData = $.parseJSON(data);
+				var parsedData = data;
+				
+                if(parsedData.Count === 0){
                   return;
                 }
 
-                for(i = 0;i < data.Result[0].Subjects.length; i++){
-                    $scope.subjects.push(data.Result[0].Subjects[i]);
+                for(i = 0;i < parsedData.Result[0].Subjects.length; i++){
+                    $scope.subjects.push(parsedData.Result[0].Subjects[i]);
                 }
                 $scope.getAliases();
             },
@@ -72,21 +67,23 @@ function FairyCtrl($scope){
 
     $scope.getAliases = function () {
 
-		var filter = { "Major" : $("#Majors1").find(':selected').val() };
-
+		//var filter = { "Major" : $("#Majors1").find(':selected').val() };
+		var filter = { "Major" : "Компютърни Науки" };
 		$.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Alias/',
             type: "GET",
             headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
                       "X-Everlive-Filter" : JSON.stringify(filter)},
             success: function(data){
-
-                if(data.Count === 0){
+//debugger;
+				//var parsedData = $.parseJSON(data);
+                var parsedData = data;
+				if(parsedData.Count === 0){
                   return;
                 }
-
-                for(i = 0; i < data.Result.length; i++){
-					$scope.aliases.push(data.Result[i]);
+                
+				for(i = 0; i < parsedData.Result.length; i++){
+					$scope.aliases.push(parsedData.Result[i]);
                 }
 
 				$scope.getSubjects();
@@ -104,7 +101,9 @@ function FairyCtrl($scope){
             headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0"},
             success: function(data) {
 				$scope.$apply(function() {
-					var majors = data.Result;
+					//var parsedData = $.parseJSON(data);
+					var parsedData = data;
+					var majors = parsedData.Result;
 
 					for(var i = 0; i < majors.length; i++){
 						$scope.majors.push(majors[i]);
@@ -127,7 +126,10 @@ function FairyCtrl($scope){
             headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
                       "X-Everlive-Filter" : JSON.stringify(filter)},
             success: function(data){
-                var subjects = data.Result; //[0].Subjects;
+			
+				//var parsedData = $.parseJSON(data);
+				var parsedData = data;
+                var subjects = parsedData.Result; //[0].Subjects;
 
                 for(var i = 0; i < subjects.length;i++){
 
@@ -179,7 +181,10 @@ function FairyCtrl($scope){
         }
     };
 	
-	setTimeout(function() {$scope.getAllMajors()}, 0);
+		//$("#Majors1").val("Приложна Mатематика");
+		//console.log($("#Majors1").find(':selected').val());
+		$scope.getAllMajors();
+		$scope.getMajor();
 }
 
 
