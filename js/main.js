@@ -21,15 +21,19 @@ function can_be_used_by(x, y){
     }
 }
 
-el = 2;//new Everlive('RhGb6ryktMNcAwj9');
+//el = new Everlive('RhGb6ryktMNcAwj9');
 
 function FairyCtrl($scope){
     $scope.subjects = ['d', 'e'];
     $scope.edges = [];
+    $scope.nodes = {};
 
     $scope.getProgramme = function(){
 
         var filter = { "Name" : $("#programme").val() };
+        $scope.edges = [];
+        $scope.subjects = [];
+        $scope.nodes = {};
 
         $.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Major/',
@@ -64,6 +68,10 @@ function FairyCtrl($scope){
                 var subjects = data.Result; //[0].Subjects;
 
                 for(var i = 0; i < subjects.length;i++){
+                    $scope.nodes[subjects[i].Name] = sys.addNode(
+                        subjects[i].Name,
+                        {'label' : subjects[i].Name});
+
                     for(var j = i + 1;j < subjects.length;j++){
 
                         if(can_be_used_by(subjects[i], subjects[j])){
@@ -93,10 +101,8 @@ function FairyCtrl($scope){
     $scope.drawEdges = function(){
         for(var d = 0;d < $scope.edges.length;d++){
             sys.addEdge(
-                sys.addNode($scope.edges[d][0].Name,
-                            {'label' : $scope.edges[d][0].Name}),
-                sys.addNode($scope.edges[d][1].Name,
-                            {'label' : $scope.edges[d][1].Name}));
+                $scope.nodes[$scope.edges[d][0].Name],
+                $scope.nodes[$scope.edges[d][1].Name]);
         }
     };
 }
