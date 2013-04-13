@@ -123,9 +123,5 @@ function FairyCtrl($scope){
         }
     };
 	
-	setTimeout(function() {$scope.getAllMajors()}, 0);
+	$scope.getAllMajors();
 }
-
-
-
-
