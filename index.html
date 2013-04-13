@@ -1,33 +1,100 @@
-<!doctype html>
-<html ng-app>
+
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <!--<script src="libs/everlive.js"></script>-->
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/basic.css" type="text/css">
-    <meta charset='utf-8'>
-  </head>
-  <body class="grab_excess_space">
+    <meta charset="utf-8">
+    <title>Бакалавърски програми ФМИ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-	<div ng-controller="FairyCtrl">     
-	  <em>Специалности:</em>
-      <select  id="Majors1">
-        <option ng-repeat="major in majors" value= {{major.Name}}>
-          <span>  {{major.Name}} </span>
-        </option>
-		<option value="Компютърни Науки" selected="true">
-          <span> Компютърни Науки</span>
-        </option>
-      </select>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/customize.css" rel="stylesheet">
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Обучението във ФМИ</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-  
-    <canvas class="grab_excess_space" id="viewport" ></canvas>
-	
-	<div id="Description1"></div>
 
-    <script src="js/renderer.js"></script>
-    <script src="libs/arbor.js"></script>
+    <div class="container">
+
+      <div class="hero-unit">
+        <h1>Какво се учи във ФМИ</h1>
+        <p>Tова е мястото, където ще разберете какво ще учите във ФМИ и защо. Изберете специалността, която Ви интересува.</p>
+
+      </div>
+
+      <div class="row">
+        <div class="span3">
+          <div class="specbtn">
+          <a href="#" class="btn btn-primary btn-large">Компютърни науки</a>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="specbtn">
+          <a href="#" class="btn btn-primary btn-large">Софтуерно инженерство</a>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="specbtn">
+          <a href="#" class="btn btn-primary btn-large">Информационни системи</a>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="specbtn">
+          <a href="index.html?major='Информатика'" class="btn btn-primary btn-large">Информатика</a>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="specbtn">
+          <a href="#" class="btn btn-primary btn-large">Приложна математика</a>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="specbtn">
+          <a href="#" class="btn btn-primary btn-large">Статистика</a>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="specbtn">
+          <a href="#" class="btn btn-primary btn-large">Математика</a>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="specbtn">
+          <a href="#" class="btn btn-primary btn-large">Математика и информатика</a>
+          </div>
+        </div>
+      </div>
+
+
+
+      <footer>
+        <p>&copy; Феичките</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+   
+    <script src="js/bootstrap.js"></script>
 
   </body>
 </html>
