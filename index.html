@@ -12,14 +12,21 @@
 
 	<div ng-controller="FairyCtrl">
       <label>Name:</label>
-      <form ng-submit="getProgramme()">
-        <input type="text" id="programme" value='Компютърни Науки'placeholder="programme">
+      <form ng-submit="getMajor()">
+        <input type="text" id="major" value='Компютърни Науки' placeholder="major">
         <input type="submit" value="it">
       </form>
+	  <em>Subjects:</em>
       <ul>
         <li ng-repeat="subject in subjects">
           <span>  {{subject}} </span>
-          </li>
+        </li>
+      </ul>
+	  <em>Majors:</em>
+      <ul>
+        <li ng-repeat="major in majors">
+          <span>  {{major.Name}} </span>
+        </li>
       </ul>
     </div>
   
