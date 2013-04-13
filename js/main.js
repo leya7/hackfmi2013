@@ -53,7 +53,7 @@ function FairyCtrl($scope){
                 for(i = 0;i < data.Result[0].Subjects.length; i++){
                     $scope.subjects.push(data.Result[0].Subjects[i]);
                 }
-                $scope.getSubjects(data.Result[0].Subjects);
+                $scope.getAliases();				
             },
             error: function(error){
                 alert(JSON.stringify(error));
@@ -63,6 +63,8 @@ function FairyCtrl($scope){
 
     $scope.getAliases = function () {
 	
+		var filter = { "Major" : $("#programme").val() };
+		
 		$.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Alias/',
             type: "GET",
@@ -74,23 +76,22 @@ function FairyCtrl($scope){
                   return;
                 }
 
-                for(i = 0;i < data.Result[0].Aliases.length; i++){
-					$scope.aliases.push();
+                for(i = 0; i < data.Result[0].length; i++){
+					$scope.aliases.push(data.Result[0][i]);
                 }
-                //$scope.getSubjects(data.Result[0].Subjects);
+				
+				$scope.getSubjects();
             },
             error: function(error){
                 alert(JSON.stringify(error));
             }
         });
 
-	}	
-
-}
+	};	
 	
-	$scope.getSubjects = function(names){
+	$scope.getSubjects = function(){
 
-        var filter = { "Name" : { "$in" : names } };
+        var filter = { "Name" : { "$in" : $scope.subjects } };
 
         $.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Subject',
@@ -101,6 +102,15 @@ function FairyCtrl($scope){
                 var subjects = data.Result; //[0].Subjects;
 
                 for(var i = 0; i < subjects.length;i++){
+					
+					for(var j=0; j < $scope.aliases.length; j++){
+						if (subject[i].Name == $scope.aliases[j].Name) {
+							subject[i].Name = $scope.aliases[j].Name;
+							break;
+						}
+					}			
+					
+				
                     $scope.nodes[subjects[i].Name] = sys.addNode(
                         subjects[i].Name,
                         {'label' : subjects[i].Name});
@@ -116,7 +126,7 @@ function FairyCtrl($scope){
                     }
                 }
 
-                console.log($scope.edges);
+                //console.log($scope.edges);
                 $scope.drawEdges();
 
                 /* debug
@@ -135,7 +145,7 @@ function FairyCtrl($scope){
         for(var d = 0;d < $scope.edges.length;d++){
             sys.addEdge(
                 $scope.nodes[$scope.edges[d][0].Name],
-                $scope.nodes[$scope.edges[d][1].Name]),
+                $scope.nodes[$scope.edges[d][1].Name],
 				$scope.edges[d][2].Provides);
         }
     };
