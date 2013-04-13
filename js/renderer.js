@@ -44,7 +44,7 @@ Renderer = function(canvas) {
           ctx.moveTo(pt2.x, pt2.y);
           ctx.lineTo(pt2.x - len * Math.cos(angle + Math.PI / 6),
                      pt2.y - len * Math.sin(angle + Math.PI / 6));
-          console.log(angle);
+
           ctx.stroke();
         })
 
