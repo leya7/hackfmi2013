@@ -53,7 +53,7 @@ function FairyCtrl($scope){
                 for(i = 0;i < data.Result[0].Subjects.length; i++){
                     $scope.subjects.push(data.Result[0].Subjects[i]);
                 }
-                $scope.getAliases();				
+                $scope.getAliases();
             },
             error: function(error){
                 alert(JSON.stringify(error));
@@ -62,9 +62,9 @@ function FairyCtrl($scope){
     };
 
     $scope.getAliases = function () {
-	
+
 		var filter = { "Major" : $("#programme").val() };
-		
+
 		$.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Alias/',
             type: "GET",
@@ -76,10 +76,10 @@ function FairyCtrl($scope){
                   return;
                 }
 
-                for(i = 0; i < data.Result[0].length; i++){
-					$scope.aliases.push(data.Result[0][i]);
+                for(i = 0; i < data.Result.length; i++){
+					$scope.aliases.push(data.Result[i]);
                 }
-				
+
 				$scope.getSubjects();
             },
             error: function(error){
@@ -87,8 +87,8 @@ function FairyCtrl($scope){
             }
         });
 
-	};	
-	
+	};
+
 	$scope.getSubjects = function(){
 
         var filter = { "Name" : { "$in" : $scope.subjects } };
@@ -102,15 +102,16 @@ function FairyCtrl($scope){
                 var subjects = data.Result; //[0].Subjects;
 
                 for(var i = 0; i < subjects.length;i++){
-					
+
 					for(var j=0; j < $scope.aliases.length; j++){
-						if (subject[i].Name == $scope.aliases[j].Name) {
-							subject[i].Name = $scope.aliases[j].Name;
+
+                    	if (subjects[i].Name == $scope.aliases[j].Subject) {
+							subjects[i].Name = $scope.aliases[j].Name;
 							break;
 						}
-					}			
-					
-				
+					}
+
+
                     $scope.nodes[subjects[i].Name] = sys.addNode(
                         subjects[i].Name,
                         {'label' : subjects[i].Name});
