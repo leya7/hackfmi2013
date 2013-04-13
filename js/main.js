@@ -21,12 +21,16 @@ function can_be_used_by(x, y){
     }
 }
 
-//el = new Everlive('RhGb6ryktMNcAwj9');
+
+
+el = 2;//new Everlive('RhGb6ryktMNcAwj9');
+
 
 function FairyCtrl($scope){
     $scope.subjects = ['d', 'e'];
     $scope.edges = [];
     $scope.nodes = {};
+	$scope.aliases = [];
 
     $scope.getProgramme = function(){
 
@@ -57,7 +61,34 @@ function FairyCtrl($scope){
         });
     };
 
-    $scope.getSubjects = function(names){
+    $scope.getAliases = function () {
+	
+		$.ajax({
+            url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Alias/',
+            type: "GET",
+            headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
+                      "X-Everlive-Filter" : JSON.stringify(filter)},
+            success: function(data){
+
+                if(data.Count === 0){
+                  return;
+                }
+
+                for(i = 0;i < data.Result[0].Aliases.length; i++){
+					$scope.aliases.push();
+                }
+                //$scope.getSubjects(data.Result[0].Subjects);
+            },
+            error: function(error){
+                alert(JSON.stringify(error));
+            }
+        });
+
+	}	
+
+}
+	
+	$scope.getSubjects = function(names){
 
         var filter = { "Name" : { "$in" : names } };
 
@@ -77,10 +108,10 @@ function FairyCtrl($scope){
                     for(var j = i + 1;j < subjects.length;j++){
 
                         if(can_be_used_by(subjects[i], subjects[j])){
-                            $scope.edges.push([subjects[i], subjects[j]]);
+                            $scope.edges.push([subjects[i], subjects[j], subjects[i]]);
                         }
                         if(can_be_used_by(subjects[j], subjects[i])){
-                            $scope.edges.push([subjects[j], subjects[i]]);
+                            $scope.edges.push([subjects[j], subjects[i], subjects[j]]);
                         }
                     }
                 }
@@ -104,7 +135,8 @@ function FairyCtrl($scope){
         for(var d = 0;d < $scope.edges.length;d++){
             sys.addEdge(
                 $scope.nodes[$scope.edges[d][0].Name],
-                $scope.nodes[$scope.edges[d][1].Name]);
+                $scope.nodes[$scope.edges[d][1].Name]),
+				$scope.edges[d][2].Provides);
         }
     };
 }
