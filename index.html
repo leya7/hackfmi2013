@@ -16,7 +16,12 @@
         <option ng-repeat="major in majors" value= {{major.Name}}>
           <span>  {{major.Name}} </span>
         </option>
-      </select>
+      </select>	  <em>Majors:</em>
+      <ul>
+        <li ng-repeat="major in majors">
+          <span>  {{major.Name}} </span>
+        </li>
+      </ul>
     </div>
   
     <canvas class="grab_excess_space" id="viewport" ></canvas>

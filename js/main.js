@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	//$("#Majors1").val("РџСЂРёР»РѕР¶РЅР° РјР°С‚РµРјР°С‚РёРєР°");
+	//$("#Majors1").val("Приложна математика");
 
      sys = arbor.ParticleSystem(1000, 400,1);
      sys.renderer = Renderer('#viewport');
@@ -7,7 +7,7 @@ $(document).ready(function(){
 });
 
 $(document).load(function(){
-	 $("#Majors1").val("РџСЂРёР»РѕР¶РЅР° РјР°С‚РµРјР°С‚РёРєР°");
+	 $("#Majors1").val("Приложна математика");
 	 Console.log('ggg'+$scope);
 	 $scope.$apply(getMajor);
 });
@@ -70,8 +70,26 @@ function FairyCtrl($scope){
         });
     };
 
-    $scope.getAliases = function () {
+    $scope.getAllMajors = function(){
+        $.ajax({
+            url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Major',
+            type: "GET",
+            headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0"},
+            success: function(data) {
+				$scope.$apply(function() {
+					var majors = data.Result;
 
+					for(var i = 0; i < majors.length; i++){
+						$scope.majors.push(majors[i]);
+					}
+				});
+            },
+            error: function(error){
+                alert(JSON.stringify(error));
+            }
+        });
+    };
+    $scope.getSubjects = function(names){
 		var filter = { "Major" : $("#Majors1").find(':selected').val() };
 
 		$.ajax({
@@ -179,9 +197,5 @@ function FairyCtrl($scope){
         }
     };
 	
-	setTimeout(function() {$scope.getAllMajors()}, 0);
+	$scope.getAllMajors();
 }
-
-
-
-
