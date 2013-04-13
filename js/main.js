@@ -1,23 +1,10 @@
 $(document).ready(function(){
-<<<<<<< HEAD
-=======
-	//$("#Majors1").val("Ïðèëîæíà ìàòåìàòèêà");
-
->>>>>>> a79e02ec18ff352bde6067855ff46dfed85c75ec
      sys = arbor.ParticleSystem(1000, 400,1);
      sys.renderer = Renderer('#viewport');
      sys.parameters({gravity : true});
 });
 
-<<<<<<< HEAD
-=======
-$(document).load(function(){
-	 $("#Majors1").val("Ïðèëîæíà ìàòåìàòèêà");
-	 Console.log('ggg'+$scope);
-	 $scope.$apply(getMajor);
-});
 
->>>>>>> a79e02ec18ff352bde6067855ff46dfed85c75ec
 function can_be_used_by(x, y){
     /* determines if knowledge from subject x can be used by
        other subject y
@@ -88,10 +75,8 @@ function FairyCtrl($scope){
 				$scope.$apply(function() {
 					var majors = data.Result;
 
-<<<<<<< HEAD
 		//var filter = { "Major" : $("#Majors1").find(':selected').val() };
 		var filter = { "Major" : "ÐšÐ¾Ð¼Ð¿ÑŽÑ‚ÑŠÑ€Ð½Ð¸ ÐÐ°ÑƒÐºÐ¸" };
-=======
 					for(var i = 0; i < majors.length; i++){
 						$scope.majors.push(majors[i]);
 					}
@@ -105,7 +90,6 @@ function FairyCtrl($scope){
     $scope.getSubjects = function(names){
 		var filter = { "Major" : $("#Majors1").find(':selected').val() };
 
->>>>>>> a79e02ec18ff352bde6067855ff46dfed85c75ec
 		$.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Alias/',
             type: "GET",
@@ -218,12 +202,8 @@ function FairyCtrl($scope){
         }
     };
 	
-<<<<<<< HEAD
 		//$("#Majors1").val("ÐŸÑ€Ð¸Ð»Ð¾Ð¶Ð½Ð° MÐ°Ñ‚ÐµÐ¼Ð°Ñ‚Ð¸ÐºÐ°");
 		//console.log($("#Majors1").find(':selected').val());
 		$scope.getAllMajors();
 		$scope.getMajor();
-=======
-	$scope.getAllMajors();
->>>>>>> a79e02ec18ff352bde6067855ff46dfed85c75ec
 }
