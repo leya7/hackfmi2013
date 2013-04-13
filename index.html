@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html ng-app>
   <head>
@@ -31,3 +32,38 @@
 
   </body>
 </html>
+=======
+<!doctype html>
+<html ng-app>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <!--<script src="libs/everlive.js"></script>-->
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/basic.css" type="text/css">
+    <meta charset='utf-8'>
+  </head>
+  <body class="grab_excess_space">
+
+	<div ng-controller="FairyCtrl">     
+	  <em>Специалности:</em>
+      <select  id="Majors1">
+        <option ng-repeat="major in majors" value= {{major.Name}}>
+          <span>  {{major.Name}} </span>
+        </option>
+      </select>	  <em>Majors:</em>
+      <ul>
+        <li ng-repeat="major in majors">
+          <span>  {{major.Name}} </span>
+        </li>
+      </ul>
+    </div>
+  
+    <canvas class="grab_excess_space" id="viewport" ></canvas>
+
+    <script src="js/renderer.js"></script>
+    <script src="libs/arbor.js"></script>
+
+  </body>
+</html>
+>>>>>>> a79e02ec18ff352bde6067855ff46dfed85c75ec
