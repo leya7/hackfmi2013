@@ -24,9 +24,9 @@ Renderer = function(canvas) {
 			//edge is a line and pt1 and pt2 are the position of two points that describe the line
 			particleSystem.eachEdge(function(edge, pt1, pt2) {
 				// this is how we set in which color to draw
-				ctx.strokeStyle = "rgba(0,0,0, .7)";
+				ctx.strokeStyle = edge.color;
 
-				ctx.lineWidth = 1 + 6 * edge.data.weight;
+				ctx.lineWidth = edge.lineWidth;
 				ctx.beginPath();
 
 				ctx.moveTo(pt1.x, pt1.y);
@@ -132,6 +132,35 @@ Renderer = function(canvas) {
 				$('#SelectedSubject').fadeIn();
 				$('#SubjectName').text(g_selectedSubject.Name);
 				$('#SubjectDescr').text(g_selectedSubject.Description);
+
+				var defaultColor = "rgba(0,0,0, .7)";
+				
+				particleSystem.eachEdge(function(edge, pt1, pt2) {
+					edge.color = defaultColor;
+					edge.lineWidth = 2;
+				});
+				
+				var visitOut = function(node, level) {
+				    particleSystem.eachEdge(function(cur, pt1, pt2) {
+				        if(node.name == cur.source.name) {    // node -> cur
+							cur.color = "rgba(" + (100 + (50 * level)) + ",0," + (100 + (20 * level)) + ", 1)";
+							cur.lineWidth = 2 + (5 - level * 2);
+				            visitOut(cur.target, level + 1);
+				        }
+				    });
+				};
+				var visitIn = function(node, level) {
+				    particleSystem.eachEdge(function(cur, pt1, pt2) {
+				        if(node.name == cur.target.name) {    // node <- cur
+							cur.color = "rgba(0," + (100 + (50 * level)) + "," + (100 + (20 * level)) + ", 1)";
+							cur.lineWidth = 2 + (5 - level * 2);
+				            visitIn(cur.source, level + 1);
+				        }
+				    });
+				};
+				g_selectedSubject.name = g_selectedSubject.Name;
+				visitOut(g_selectedSubject, 0);
+				visitIn(g_selectedSubject, 0);
 			} else {
 				$('#SelectedSubject').fadeOut();
 			}
