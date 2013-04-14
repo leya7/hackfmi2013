@@ -65,7 +65,7 @@ function FairyCtrl($scope){
                 $('#SelectedSubject').fadeOut();
             },
             error: function(error){
-                alert(JSON.stringify(error));
+                //alert(JSON.stringify(error));
             }
         });
     };
@@ -89,7 +89,7 @@ function FairyCtrl($scope){
 				$scope.getSubjects();
             },
             error: function(error){
-                alert(JSON.stringify(error));
+                //alert(JSON.stringify(error));
             }
         });
     };
@@ -112,7 +112,7 @@ function FairyCtrl($scope){
 				});
             },
             error: function(error){
-                alert(JSON.stringify(error));
+                //alert(JSON.stringify(error));
             }
         });
     };
@@ -164,7 +164,7 @@ function FairyCtrl($scope){
                 $scope.drawEdges();
             },
             error: function(error){
-                alert(JSON.stringify(error));
+                //alert(JSON.stringify(error));
             }
         });
     };
@@ -181,8 +181,9 @@ function FairyCtrl($scope){
     };
 	
 	$scope.getAllMajors();
-	maj = window.location.hash;
-	maj = maj.slice(1, maj.length);
+	maj = document.URL.split('#')[1];
+	maj = maj.replace(/(%20)/g, ' ');
+	$scope.getMajor(maj);
 
 	$scope.getMajor(maj);
 	
