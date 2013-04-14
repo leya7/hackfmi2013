@@ -24,6 +24,8 @@ function can_be_used_by(x, y){
 
 el = 2;//new Everlive('RhGb6ryktMNcAwj9');
 
+loading = false;
+
 function ClearNodes(){
 	var nodes = [];
 	sys.eachNode(function(node){nodes.push(node);});
@@ -60,6 +62,7 @@ function FairyCtrl($scope){
                 for(i = 0;i < parsedData.Result[0].Subjects.length; i++){
                     $scope.subjects.push(parsedData.Result[0].Subjects[i]);
                 }
+                loading = false;
                 $scope.getAliases(major);
                 $('#SelectedSubject').fadeOut();
             },
@@ -185,8 +188,26 @@ function FairyCtrl($scope){
 
 	$("#Majors1").change(function()
 	{
-		$scope.getMajor($("#Majors1").find(':selected').val());
+        //console.log('changed');
+        var major = $('#Majors1').val();
+        if(major != undefined){
+            loading = true;
+            $scope.getMajor($("#Majors1").find(':selected').val());
+            window.location.hash = '#' + major.replace(" ", "%20");
+        }
+
 	});
 	setTimeout(function(){ $("#Majors1").val(maj); }, 1000);
 
+    $(window).bind("hashchange", function (){
+        //console.log('hash has changed to' + window.location.hash);
+        //escape race conditions?
+        if(!loading){
+            $('#Majors1').val(window.location.hash.slice(1));
+            loading = true;
+            $scope.getMajor($("#Majors1").find(':selected').val());
+        }
+    });
+
+    setTimeout(function(){ $('#Majors1').val(maj); }, 2000);
 }
