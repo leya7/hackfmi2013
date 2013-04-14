@@ -12,7 +12,7 @@ Renderer = function(canvas) {
 		selectedInEdgeColor = '#cf1717',
 		selectedOutEdgeColor = '#bff05b',
 		
-		radius = 30;
+		radius = 10;
 	
 	
 	
@@ -65,15 +65,15 @@ Renderer = function(canvas) {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 			
 			//draw the fancy background
-			var img = new Image();   // Create new img element
-			img.src = "http://subtlepatterns.com/patterns/lined_paper.png";
-			var height = ctx.canvas.height,
-				width = ctx.canvas.width;
-			for(var i = 0; i<width;i+=img.width){
-				for(var j = 0; j<height;j+=img.height){
-					ctx.drawImage(img,i,j);
-				}
-			}
+			// var img = new Image();   // Create new img element
+			// img.src = "http://subtlepatterns.com/patterns/lined_paper.png";
+			// var height = ctx.canvas.height,
+				// width = ctx.canvas.width;
+			// for(var i = 0; i<width;i+=img.width){
+				// for(var j = 0; j<height;j+=img.height){
+					// ctx.drawImage(img,i,j);
+				// }
+			// }
 			
 			//node is the object from data and pt is the position of the element in the frame
 			particleSystem.eachNode(function(node, pt) {
@@ -92,7 +92,7 @@ Renderer = function(canvas) {
 				
 				//draw the node
 				//gfx.oval(pt.x-width/2, pt.y-height/2+3, width, height, {fill:'#333'});
-				gfx.oval(pt.x-width/2, pt.y-height/2, width, height, {fill:color});
+				//gfx.oval(pt.x-width/2, pt.y-height/2, width, height, {fill:color});
 				
 				//draw the label
 				ctx.textAlign = "center";
@@ -239,7 +239,7 @@ Renderer = function(canvas) {
 				    particleSystem.eachEdge(function(cur, pt1, pt2) {
 				        if(node.name == cur.source.name) {    // node -> cur
 							cur.color = selectedOutEdgeColor;
-							cur.lineWidth = 4 + (2 - level)*3;
+							cur.lineWidth = 4 + (3 - level);
 				            visitOut(cur.target, level + 1);
 				        }
 				    });
@@ -249,7 +249,7 @@ Renderer = function(canvas) {
 				    particleSystem.eachEdge(function(cur, pt1, pt2) {
 				        if(node.name == cur.target.name) {    // node <- cur
 							cur.color = selectedInEdgeColor;
-							cur.lineWidth = 4 + (2 - level)*3;
+							cur.lineWidth = 4 + (3 - level);
 				            visitIn(cur.source, level + 1);
 				        }
 				    });
