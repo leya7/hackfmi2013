@@ -170,10 +170,12 @@ function FairyCtrl($scope){
 
     $scope.drawEdges = function(){
         for(var d = 0;d < $scope.edges.length;d++){
-            sys.addEdge(
+            var newEdge = sys.addEdge(
                 g_nodes[$scope.edges[d][0].Name],
                 g_nodes[$scope.edges[d][1].Name],
 				$scope.edges[d][2].Provides);
+			newEdge.color = "rgba(0,0,0, .7)";
+			newEdge.lineWidth = 2;
         }
     };
 	
@@ -188,5 +190,5 @@ function FairyCtrl($scope){
 		$scope.getMajor($("#Majors1").find(':selected').val());
 	});
 	
-	setTimeout(function(){console.log("baba"); $("#Majors1").val(maj);}, 2000);
+	setTimeout(function(){ $("#Majors1").val(maj); }, 2000);
 }
