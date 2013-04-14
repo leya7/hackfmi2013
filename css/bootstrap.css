@@ -6109,7 +6109,8 @@ a.badge:focus {
 }
 
 .hero-unit {
-  padding: 60px;
+  padding: 30px;
+  padding-top: 60px;
   margin-bottom: 30px;
   font-size: 18px;
   font-weight: 200;
@@ -6123,7 +6124,7 @@ a.badge:focus {
 
 .hero-unit h1 {
   margin-bottom: 0;
-  font-size: 60px;
+  font-size: 50px;
   line-height: 1;
   letter-spacing: -1px;
   color: inherit;
