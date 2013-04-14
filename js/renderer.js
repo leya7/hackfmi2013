@@ -235,6 +235,7 @@ Renderer = function(canvas) {
 				selectedSubject.node.selected = true;
 				
 				var visitOut = function(node, level) {
+					if(level >= 3) return;
 				    particleSystem.eachEdge(function(cur, pt1, pt2) {
 				        if(node.name == cur.source.name) {    // node -> cur
 							cur.color = selectedOutEdgeColor;
@@ -244,6 +245,7 @@ Renderer = function(canvas) {
 				    });
 				};
 				var visitIn = function(node, level) {
+					if(level >= 3) return;
 				    particleSystem.eachEdge(function(cur, pt1, pt2) {
 				        if(node.name == cur.target.name) {    // node <- cur
 							cur.color = selectedInEdgeColor;
