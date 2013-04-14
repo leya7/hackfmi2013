@@ -1,20 +1,20 @@
 {
-	'Name': 'РђР»РіРѕСЂРёС‚РјРё',
+	'Name': 'Алгоритми',
 	'DependsOn': [],
 	'Provides': ['algorithm', 'data structure']
 },
 {
-	'Name': 'Р’РµСЂРѕСЏС‚РЅРѕСЃС‚РЅРё Рё СЃС‚Р°С‚РёСЃС‚РёРєР°',
+	'Name': 'Вероятностни и статистика',
 	'DependsOn': ['integral'],
 	'Provides': ['probability', 'distribution']
 },
 {
-	'Name': 'РР·РєСѓСЃС‚РІРµРЅ РёРЅС‚РµР»РµРєС‚',
+	'Name': 'Изкуствен интелект',
 	'DependsOn': ['algorithm', 'probability'],
 	'Provides': ['ai']
 },
 {
-	'Name': 'РљРѕРјРїСЋС‚СЉСЂРЅР° Р»РёРЅРіРІРёСЃС‚РёРєР°',
+	'Name': 'Компютърна лингвистика',
 	'DependsOn': ['ai'],
 	'Provides': []
 },

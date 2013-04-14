@@ -62,6 +62,7 @@ function FairyCtrl($scope){
                     $scope.subjects.push(parsedData.Result[0].Subjects[i]);
                 }
                 $scope.getAliases(major);
+                $('#SelectedSubject').fadeOut();
             },
             error: function(error){
                 alert(JSON.stringify(error));

@@ -5,9 +5,7 @@ Renderer = function(canvas) {
 	var particleSystem = null;
 
 	ctx.font = "20px Verdana";
-	ctx.canvas.width  = window.innerWidth*0.8;
-	ctx.canvas.height = window.innerHeight*0.8;
-
+	
 	var that = {
 		init : function(system) {
 
@@ -15,8 +13,21 @@ Renderer = function(canvas) {
 			particleSystem.screenSize(canvas.width, canvas.height);
 			particleSystem.screenPadding(100);
 
+			var resizeCanvas =  function(){
+				ctx.canvas.width  = window.innerWidth*0.8;
+				ctx.canvas.height = window.innerHeight*0.8;
+				particleSystem.screenSize(canvas.width, canvas.height);
+			};
+			
+			window.onresize = function(){
+				resizeCanvas();
+			};
+			
+			resizeCanvas();
+			
 			that.initMouseHandling();
-
+			
+			
 		},
 		redraw : function() {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -75,6 +86,7 @@ Renderer = function(canvas) {
 					
 					x : e.pageX - pos.left,
 					y : e.pageY - pos.top,
+					
 				
 				};
 				var nearestP = particleSystem.nearest(mouseP);
@@ -121,25 +133,26 @@ Renderer = function(canvas) {
 					dragged.node.tempMass = 100;
 					dragged = null;
 					selected = null;
+					nearest = null;
 					return false;
 				}catch(e){}	
 			});
 
 		},
 		printInfo : function(selectedSubject) {
+			var defaultColor = "rgba(0,0,0, .7)";
+			
+			particleSystem.eachEdge(function(edge, pt1, pt2) {
+				edge.color = defaultColor;
+				edge.lineWidth = 2;
+			});
+				
 			if(selectedSubject) {
 				g_selectedSubject = g_subjects[selectedSubject.node.name];
 				$('#SelectedSubject').fadeIn();
 				$('#SubjectName').text(g_selectedSubject.Name);
 				$('#SubjectDescr').text(g_selectedSubject.Description);
 
-				var defaultColor = "rgba(0,0,0, .7)";
-				
-				particleSystem.eachEdge(function(edge, pt1, pt2) {
-					edge.color = defaultColor;
-					edge.lineWidth = 2;
-				});
-				
 				var visitOut = function(node, level) {
 				    particleSystem.eachEdge(function(cur, pt1, pt2) {
 				        if(node.name == cur.source.name) {    // node -> cur
