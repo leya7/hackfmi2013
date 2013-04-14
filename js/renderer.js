@@ -150,7 +150,8 @@ Renderer = function(canvas) {
 				$('#SelectedSubject').fadeIn();
 				$('#SubjectName').text(g_selectedSubject.Name);
 				$('#SubjectDescr').text(g_selectedSubject.Description);
-				
+				$('#SubjectProvides').text(g_selectedSubject.Provides.toString().replace(/\,/g, ', '));
+				$('#SubjectDepends').text((g_selectedSubject.Depends == null) ? "знания от училище" : g_selectedSubject.Depends.toString().replace(",", ", "));
 				/*var defaultColor = "rgba(0,0,0, .7)";
 
 				particleSystem.eachEdge(function(edge, pt1, pt2) {

@@ -2,6 +2,7 @@ $(document).ready(function(){
      sys = arbor.ParticleSystem(1000, 400,1);
      sys.renderer = Renderer('#viewport');
      sys.parameters({gravity : true});
+	 $('#SelectedSubject').hide();
 });
 
 
@@ -61,7 +62,7 @@ function FairyCtrl($scope){
                     $scope.subjects.push(parsedData.Result[0].Subjects[i]);
                 }
                 $scope.getAliases(major);
-                $('#SelectedSubject').fadeOut();
+                
             },
             error: function(error){
                 //alert(JSON.stringify(error));
