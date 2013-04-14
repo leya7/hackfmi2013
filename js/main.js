@@ -190,5 +190,5 @@ function FairyCtrl($scope){
 		$scope.getMajor($("#Majors1").find(':selected').val());
 	});
 	
-	setTimeout(function(){console.log("baba"); $("#Majors1").val(maj);}, 2000);
+	setTimeout(function(){ $("#Majors1").val(maj); }, 2000);
 }
