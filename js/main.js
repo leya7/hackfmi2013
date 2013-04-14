@@ -40,18 +40,17 @@ function FairyCtrl($scope){
 	g_nodes = {};
 	$scope.aliases = [];
 	$scope.majors = [];
-	
+
     $scope.getMajor = function(major){
     	var filter = { "Name" : major };
         $scope.edges = [];
         $scope.subjects = [];
-        
+
 		$.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Major/',
             type: "GET",
 			dataType: 'json',
-            headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
-                      "X-Everlive-Filter" : JSON.stringify(filter)},
+            headers: {"X-Everlive-Filter" : JSON.stringify(filter)},
             success: function(data){
 				var parsedData = data;
                 if(parsedData.Count === 0){
@@ -77,8 +76,7 @@ function FairyCtrl($scope){
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Alias/',
             type: "GET",
 			dataType: 'json',
-            headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
-                      "X-Everlive-Filter" : JSON.stringify(filter)},
+            headers: {"X-Everlive-Filter" : JSON.stringify(filter)},
             success: function(data){
 				//var parsedData = $.parseJSON(data);
                 var parsedData = data;
@@ -99,7 +97,6 @@ function FairyCtrl($scope){
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Major',
             type: "GET",
 			dataType: 'json',
-            headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0"},
             success: function(data) {
 				$scope.$apply(function() {
 					//var parsedData = $.parseJSON(data);
@@ -125,15 +122,14 @@ function FairyCtrl($scope){
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Subject',
             type: "GET",
 			dataType: 'json',
-            headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
-                      "X-Everlive-Filter" : JSON.stringify(filter)},
+            headers: {"X-Everlive-Filter" : JSON.stringify(filter)},
             success: function(data){
 
 				var parsedData = data;
                 var subjects = parsedData.Result; //[0].Subjects;
-				
+
 				ClearNodes();
-                
+
 				for(var i = 0; i < subjects.length;i++){
 
 					for(var j=0; j < $scope.aliases.length; j++){
@@ -179,18 +175,18 @@ function FairyCtrl($scope){
 			newEdge.lineWidth = 2;
         }
     };
-	
+
 	$scope.getAllMajors();
 	maj = document.URL.split('#')[1];
 	maj = maj.replace(/(%20)/g, ' ');
 	$scope.getMajor(maj);
 
 	$scope.getMajor(maj);
-	
+
 	$("#Majors1").change(function()
 	{
 		$scope.getMajor($("#Majors1").find(':selected').val());
 	});
-	
 	setTimeout(function(){ $("#Majors1").val(maj); }, 1000);
+
 }
