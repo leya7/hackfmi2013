@@ -24,34 +24,36 @@ function can_be_used_by(x, y){
 
 el = 2;//new Everlive('RhGb6ryktMNcAwj9');
 
+function ClearNodes(){
+	var nodes = [];
+	sys.eachNode(function(node){nodes.push(node);});
+	for (i = 0; i < nodes.length; i++){
+		sys.pruneNode(nodes[i]);
+	}
+	selected = undefined;
+}
 
 function FairyCtrl($scope){
-    $scope.subjects = ['d', 'e'];
+    $scope.subjects = [];
     $scope.edges = [];
     g_subjects = {};
 	g_nodes = {};
 	$scope.aliases = [];
 	$scope.majors = [];
-//debugger;
-    $scope.getMajor = function(){
 	
-        //var filter = { "Name" : $("#Majors1").find(':selected').val() };
-		var filter = { "Name" : "Компютърни Науки" };
-		//console.log($("#Majors1").find(':selected').val()+111);
+    $scope.getMajor = function(major){
+    	var filter = { "Name" : major };
         $scope.edges = [];
         $scope.subjects = [];
-
-        $.ajax({
+        
+		$.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Major/',
             type: "GET",
 			dataType: 'json',
             headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
                       "X-Everlive-Filter" : JSON.stringify(filter)},
             success: function(data){
-
-				//var parsedData = $.parseJSON(data);
 				var parsedData = data;
-				
                 if(parsedData.Count === 0){
                   return;
                 }
@@ -59,7 +61,7 @@ function FairyCtrl($scope){
                 for(i = 0;i < parsedData.Result[0].Subjects.length; i++){
                     $scope.subjects.push(parsedData.Result[0].Subjects[i]);
                 }
-                $scope.getAliases();
+                $scope.getAliases(major);
             },
             error: function(error){
                 alert(JSON.stringify(error));
@@ -67,9 +69,9 @@ function FairyCtrl($scope){
         });
     };
 
-    $scope.getAliases = function(names){
-		var filter = { "Major" : $("#Majors1").find(':selected').val() };
-
+    $scope.getAliases = function(major){
+		var filter = { "Major" : major };
+		$scope.aliases = [];
 		$.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Alias/',
             type: "GET",
@@ -77,13 +79,8 @@ function FairyCtrl($scope){
             headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
                       "X-Everlive-Filter" : JSON.stringify(filter)},
             success: function(data){
-//debugger;
 				//var parsedData = $.parseJSON(data);
                 var parsedData = data;
-				if(parsedData.Count === 0){
-                  return;
-                }
-                
 				for(i = 0; i < parsedData.Result.length; i++){
 					$scope.aliases.push(parsedData.Result[i]);
                 }
@@ -130,12 +127,13 @@ function FairyCtrl($scope){
             headers: {"Authorization" : "MasterKey Fhs7GIJFRVeAftm59rE4h2C8eT7MTVu0",
                       "X-Everlive-Filter" : JSON.stringify(filter)},
             success: function(data){
-			
-				//var parsedData = $.parseJSON(data);
+
 				var parsedData = data;
                 var subjects = parsedData.Result; //[0].Subjects;
-
-                for(var i = 0; i < subjects.length;i++){
+				
+				ClearNodes();
+                
+				for(var i = 0; i < subjects.length;i++){
 
 					for(var j=0; j < $scope.aliases.length; j++){
 
@@ -162,14 +160,7 @@ function FairyCtrl($scope){
                     }
                 }
 
-                //console.log($scope.edges);
                 $scope.drawEdges();
-
-                /* debug
-                for(var d = 0;d < $scope.edges.length;d++){
-                    var edge = $scope.edges[d];
-                    console.log(edge[0].Name + ' ' + edge[1].Name);
-                };*/
             },
             error: function(error){
                 alert(JSON.stringify(error));
@@ -188,8 +179,16 @@ function FairyCtrl($scope){
         }
     };
 	
-		//$("#Majors1").val("Приложна Mатематика");
-		//console.log($("#Majors1").find(':selected').val());
-		$scope.getAllMajors();
-		$scope.getMajor();
+	$scope.getAllMajors();
+	maj = document.URL.split('#')[1];
+	maj = maj.replace(/(%20)/g, ' ');
+
+	$scope.getMajor(maj);
+	
+	$("#Majors1").change(function()
+	{
+		$scope.getMajor($("#Majors1").find(':selected').val());
+	});
+	
+	setTimeout(function(){console.log("baba"); $("#Majors1").val(maj);}, 2000);
 }
