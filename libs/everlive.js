@@ -1,4 +1,4 @@
-﻿/*global RSVP,reqwest,_*/
+/*global RSVP,reqwest,_*/
 (function (ns) {
     var slice = Array.prototype.slice;
     var everliveUrl = "//api.everlive.com/v1/";

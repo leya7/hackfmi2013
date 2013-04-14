@@ -62,6 +62,7 @@ function FairyCtrl($scope){
                     $scope.subjects.push(parsedData.Result[0].Subjects[i]);
                 }
                 $scope.getAliases(major);
+                $('#SelectedSubject').fadeOut();
             },
             error: function(error){
                 alert(JSON.stringify(error));
@@ -180,8 +181,8 @@ function FairyCtrl($scope){
     };
 	
 	$scope.getAllMajors();
-	maj = document.URL.split('#')[1];
-	maj = maj.replace(/(%20)/g, ' ');
+	maj = window.location.hash;
+	maj = maj.slice(1, maj.length);
 
 	$scope.getMajor(maj);
 	
@@ -190,5 +191,5 @@ function FairyCtrl($scope){
 		$scope.getMajor($("#Majors1").find(':selected').val());
 	});
 	
-	setTimeout(function(){ $("#Majors1").val(maj); }, 2000);
+	setTimeout(function(){ $("#Majors1").val(maj); }, 1000);
 }
