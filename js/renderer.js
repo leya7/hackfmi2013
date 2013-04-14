@@ -5,7 +5,7 @@ Renderer = function(canvas) {
 	var particleSystem = null;
 
 	ctx.font = "20px Verdana";
-
+	
 	var that = {
 		init : function(system) {
 
@@ -13,8 +13,21 @@ Renderer = function(canvas) {
 			particleSystem.screenSize(canvas.width, canvas.height);
 			particleSystem.screenPadding(100);
 
+			var resizeCanvas =  function(){
+				ctx.canvas.width  = window.innerWidth*0.8;
+				ctx.canvas.height = window.innerHeight*0.8;
+				particleSystem.screenSize(canvas.width, canvas.height);
+			};
+			
+			window.onresize = function(){
+				resizeCanvas();
+			};
+			
+			resizeCanvas();
+			
 			that.initMouseHandling();
-
+			
+			
 		},
 		redraw : function() {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -22,9 +35,9 @@ Renderer = function(canvas) {
 			//edge is a line and pt1 and pt2 are the position of two points that describe the line
 			particleSystem.eachEdge(function(edge, pt1, pt2) {
 				// this is how we set in which color to draw
-				ctx.strokeStyle = "rgba(0,0,0, .7)";
+				ctx.strokeStyle = edge.color;
 
-				ctx.lineWidth = 1 + 6 * edge.data.weight;
+				ctx.lineWidth = edge.lineWidth;
 				ctx.beginPath();
 
 				ctx.moveTo(pt1.x, pt1.y);
@@ -73,6 +86,7 @@ Renderer = function(canvas) {
 					
 					x : e.pageX - pos.left,
 					y : e.pageY - pos.top,
+					
 				
 				};
 				var nearestP = particleSystem.nearest(mouseP);
@@ -80,6 +94,7 @@ Renderer = function(canvas) {
 				if(nearestP.distance < 20){
 					selected = nearest = dragged = nearestP;
 				}
+				that.printInfo(selected);
 
 				if (selected) {
 					dragged.node.fixed = true;
@@ -118,11 +133,51 @@ Renderer = function(canvas) {
 					dragged.node.tempMass = 100;
 					dragged = null;
 					selected = null;
+					nearest = null;
 					return false;
 				}catch(e){}	
 			});
 
 		},
+		printInfo : function(selectedSubject) {
+			var defaultColor = "rgba(0,0,0, .7)";
+			
+			particleSystem.eachEdge(function(edge, pt1, pt2) {
+				edge.color = defaultColor;
+				edge.lineWidth = 2;
+			});
+				
+			if(selectedSubject) {
+				g_selectedSubject = g_subjects[selectedSubject.node.name];
+				$('#SelectedSubject').fadeIn();
+				$('#SubjectName').text(g_selectedSubject.Name);
+				$('#SubjectDescr').text(g_selectedSubject.Description);
+
+				var visitOut = function(node, level) {
+				    particleSystem.eachEdge(function(cur, pt1, pt2) {
+				        if(node.name == cur.source.name) {    // node -> cur
+							cur.color = "rgba(" + (100 + (50 * level)) + ",0," + (100 + (20 * level)) + ", 1)";
+							cur.lineWidth = 2 + (5 - level * 2);
+				            visitOut(cur.target, level + 1);
+				        }
+				    });
+				};
+				var visitIn = function(node, level) {
+				    particleSystem.eachEdge(function(cur, pt1, pt2) {
+				        if(node.name == cur.target.name) {    // node <- cur
+							cur.color = "rgba(0," + (100 + (50 * level)) + "," + (100 + (20 * level)) + ", 1)";
+							cur.lineWidth = 2 + (5 - level * 2);
+				            visitIn(cur.source, level + 1);
+				        }
+				    });
+				};
+				g_selectedSubject.name = g_selectedSubject.Name;
+				visitOut(g_selectedSubject, 0);
+				visitIn(g_selectedSubject, 0);
+			} else {
+				$('#SelectedSubject').fadeOut();
+			}
+		}
 	}
 	return that;
 }

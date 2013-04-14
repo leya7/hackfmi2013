@@ -15,3 +15,10 @@ body {
     margin: auto;
     border: 2px solid gray;
 }
+
+#SelectedSubjectHolder
+{
+    display: inline-block;
+    position: absolute;
+    top:0;
+}

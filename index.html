@@ -1,32 +1,101 @@
-<!doctype html>
-<html ng-app>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <!--<script src="libs/everlive.js"></script>-->
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="style/reasons_to_study.css" type="text/css">
-    <meta charset='utf-8'>
-  </head>
-  <body class="grab_excess_space">
+    <meta charset="utf-8">
+    <title>Бакалавърски програми ФМИ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-	<div ng-controller="FairyCtrl">
-      <label>Name:</label>
-      <form ng-submit="getProgramme()">
-        <input type="text" id="programme" value='Компютърни Науки'placeholder="programme">
-        <input type="submit" value="it">
-      </form>
-      <ul>
-        <li ng-repeat="subject in subjects">
-          <span>  {{subject}} </span>
-          </li>
-      </ul>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/customize.css" rel="stylesheet">
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Обучението във ФМИ</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-  
-    <canvas class="grab_excess_space" id="viewport" width="1024" height="600"></canvas>
 
-    <script src="js/renderer.js"></script>
-    <script src="libs/arbor.js"></script>
+    <div class="container">
+
+      <div class="hero-unit">
+        <h1 class="spechead">Какво ще научите във ФМИ?</h1>
+        <p>Ако някога сте се чудили защо учите дадени предмети, това е мястото, където ще получите нужните отговори.
+		Ще разберете връзките между изучваните предмети и какви възможности за развитие разкрива пред Вас.
+		<br /><h3>Моля изберете специалността, която Ви интересува.</h3></p>
+
+      </div>
+
+      <div class="row">
+        <div class="span3">
+          <div class="specbtn">
+          <a href="fairy_tree.html#Компютърни%20Науки" class="btn btn-primary btn-large">Компютърни науки</a>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="specbtn">
+          <a href="fairy_tree.html#Софтуерно%20Инженерство" class="btn btn-primary btn-large">Софтуерно инженерство</a>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="specbtn">
+          <a href="fairy_tree.html#Информационни%20Системи" class="btn btn-primary btn-large">Информационни системи</a>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="specbtn">
+          <a href="fairy_tree.html#Информатика" class="btn btn-primary btn-large">Информатика</a>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="specbtn">
+          <a href="fairy_tree.html#Приложна%20Математика" class="btn btn-primary btn-large">Приложна математика</a>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="specbtn">
+          <a href="fairy_tree.html#Статистика" class="btn btn-primary btn-large">Статистика</a>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="specbtn">
+          <a href="fairy_tree.html#Математика" class="btn btn-primary btn-large">Математика</a>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="specbtn">
+          <a href="fairy_tree.html#Математика%20и%20Информатика" class="btn btn-primary btn-large">Математика и информатика</a>
+          </div>
+        </div>
+      </div>
+
+
+
+      <footer>
+        <p>&copy; Феичките</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+   
+    <script src="js/bootstrap.js"></script>
 
   </body>
 </html>
