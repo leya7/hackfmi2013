@@ -40,12 +40,12 @@ function FairyCtrl($scope){
 	g_nodes = {};
 	$scope.aliases = [];
 	$scope.majors = [];
-	
+
     $scope.getMajor = function(major){
     	var filter = { "Name" : major };
         $scope.edges = [];
         $scope.subjects = [];
-        
+
 		$.ajax({
             url: 'https://api.everlive.com/v1/RhGb6ryktMNcAwj9/Major/',
             type: "GET",
@@ -64,7 +64,7 @@ function FairyCtrl($scope){
                 $scope.getAliases(major);
             },
             error: function(error){
-                alert(JSON.stringify(error));
+                //alert(JSON.stringify(error));
             }
         });
     };
@@ -88,7 +88,7 @@ function FairyCtrl($scope){
 				$scope.getSubjects();
             },
             error: function(error){
-                alert(JSON.stringify(error));
+                //alert(JSON.stringify(error));
             }
         });
     };
@@ -111,7 +111,7 @@ function FairyCtrl($scope){
 				});
             },
             error: function(error){
-                alert(JSON.stringify(error));
+                //alert(JSON.stringify(error));
             }
         });
     };
@@ -130,9 +130,9 @@ function FairyCtrl($scope){
 
 				var parsedData = data;
                 var subjects = parsedData.Result; //[0].Subjects;
-				
+
 				ClearNodes();
-                
+
 				for(var i = 0; i < subjects.length;i++){
 
 					for(var j=0; j < $scope.aliases.length; j++){
@@ -163,7 +163,7 @@ function FairyCtrl($scope){
                 $scope.drawEdges();
             },
             error: function(error){
-                alert(JSON.stringify(error));
+                //alert(JSON.stringify(error));
             }
         });
     };
@@ -178,17 +178,17 @@ function FairyCtrl($scope){
 			newEdge.lineWidth = 2;
         }
     };
-	
+
 	$scope.getAllMajors();
 	maj = document.URL.split('#')[1];
 	maj = maj.replace(/(%20)/g, ' ');
 
 	$scope.getMajor(maj);
-	
+
 	$("#Majors1").change(function()
 	{
 		$scope.getMajor($("#Majors1").find(':selected').val());
 	});
-	
+
 	setTimeout(function(){ $("#Majors1").val(maj); }, 2000);
 }
