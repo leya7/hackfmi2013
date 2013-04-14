@@ -41,9 +41,9 @@ Renderer = function(canvas) {
 				//Math.sqrt((p2.y - p1.y) * (p2.y - p1.y) +
 				//    (p2.x - p1.x) * (p2.x - p1.x));
 
-				ctx.moveTo(pt2.x, pt2.y);
+				ctx.moveTo(pt2.x - 5, pt2.y - 5);
 				ctx.lineTo(pt2.x - len * Math.cos(angle - Math.PI / 6), pt2.y - len * Math.sin(angle - Math.PI / 6));
-				ctx.moveTo(pt2.x, pt2.y);
+				ctx.moveTo(pt2.x - 5, pt2.y - 5);
 				ctx.lineTo(pt2.x - len * Math.cos(angle + Math.PI / 6), pt2.y - len * Math.sin(angle + Math.PI / 6));
 				ctx.stroke();
 			})
@@ -72,13 +72,13 @@ Renderer = function(canvas) {
 			$(canvas).mousedown(function(e) {
 				var pos = $(this).offset();
 				var mouseP = {
-					
+
 					x : e.pageX - pos.left,
 					y : e.pageY - pos.top,
-				
+
 				};
 				var nearestP = particleSystem.nearest(mouseP);
-				
+
 				if(nearestP.distance < 20){
 					selected = nearest = dragged = nearestP;
 				}
@@ -97,12 +97,12 @@ Renderer = function(canvas) {
 					x : e.pageX - pos.left,
 					y : e.pageY - pos.top
 				};
-				
+
 				nearest = particleSystem.nearest(mouseP);
-				
+
 				if (!nearest)
 					return;
-				
+
 				if (dragged) {
 					var p = particleSystem.fromScreen(mouseP)
 					dragged.node.p = {
@@ -122,7 +122,7 @@ Renderer = function(canvas) {
 					dragged = null;
 					selected = null;
 					return false;
-				}catch(e){}	
+				}catch(e){}
 			});
 
 		},
@@ -134,12 +134,12 @@ Renderer = function(canvas) {
 				$('#SubjectDescr').text(g_selectedSubject.Description);
 
 				var defaultColor = "rgba(0,0,0, .7)";
-				
+
 				particleSystem.eachEdge(function(edge, pt1, pt2) {
 					edge.color = defaultColor;
 					edge.lineWidth = 2;
 				});
-				
+
 				var visitOut = function(node, level) {
 				    particleSystem.eachEdge(function(cur, pt1, pt2) {
 				        if(node.name == cur.source.name) {    // node -> cur
