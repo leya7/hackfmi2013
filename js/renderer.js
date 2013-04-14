@@ -14,8 +14,8 @@ Renderer = function(canvas) {
 			particleSystem.screenPadding(100);
 
 			var resizeCanvas =  function(){
-				ctx.canvas.width  = window.innerWidth*0.8;
-				ctx.canvas.height = window.innerHeight*0.8;
+				ctx.canvas.width  = window.innerWidth*0.7;
+				ctx.canvas.height = window.innerHeight*0.9;
 				particleSystem.screenSize(canvas.width, canvas.height);
 			};
 			

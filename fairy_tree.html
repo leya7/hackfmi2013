@@ -10,9 +10,9 @@
   </head>
   <body class="grab_excess_space">
 
-	<div ng-controller="FairyCtrl">     
-	  <em>Специалности:</em>
-      <select  id="Majors1">
+	<div ng-controller="FairyCtrl" style="padding-top: 20px; padding-left: 20px;">     
+	  <b>Специалност:</b>
+      <select id="Majors1">
         <option ng-repeat="major in majors" value= {{major.Name}}>
           <span>  {{major.Name}} </span>
         </option>
@@ -21,7 +21,7 @@
   
     <canvas class="grab_excess_space" id="viewport" ></canvas>
 
-    <div id="SelectedSubjectHolder" width="20%">
+    <div id="SelectedSubjectHolder" width="30%">
         <span id="SelectedSubject">
             <h3 id="SubjectName"></h3>
             <div id="SubjectDescr"></div>
