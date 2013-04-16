@@ -6,11 +6,35 @@
     <!--<script src="libs/everlive.js"></script>-->
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/basic.css" type="text/css">
+	<link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/customize.css" rel="stylesheet">
     <meta charset='utf-8'>
   </head>
   <body class="grab_excess_space">
+	
+	<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Обучението във ФМИ</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
 
-	<div ng-controller="FairyCtrl" style="padding-top: 20px; padding-left: 20px;">     
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+	
+	<div ng-controller="FairyCtrl" style="padding-top: 70px; padding-left: 50px;">     
 	  <b>Специалност:</b>
       <select id="Majors1">
         <option ng-repeat="major in majors" value= {{major.Name}}>
@@ -21,7 +45,7 @@
 
     <canvas class="grab_excess_space" id="viewport" ></canvas>
 
-    <div id="SelectedSubjectHolder" width="40%">
+    <div id="SelectedSubjectHolder">
         <span id="SelectedSubject">
             <h3 id="SubjectName"></h3>
             <div id="SubjectDescr"></div>
@@ -31,9 +55,14 @@
 			<div id="SubjectDepends"></div>
         </span>
     </div>
-
+	
+	<footer>
+        <p>&copy; Феичките</p>
+   </footer>
+	
     <script src="js/renderer.js"></script>
     <script src="libs/arbor.js"></script>
+	<script src="js/bootstrap.js"></script>
 
   </body>
 </html>

@@ -34,8 +34,8 @@ Renderer = function(canvas) {
 	
 	var that = {
 		init : function(system) {
-			ctx.canvas.width  = window.innerWidth*0.8;
-			ctx.canvas.height = window.innerHeight*1.2;
+			ctx.canvas.width  = window.innerWidth*0.7;
+			ctx.canvas.height = window.innerHeight*0.78;
 			
 			particleSystem = system;
 			particleSystem.screenSize(ctx.canvas.width, ctx.canvas.height);
@@ -43,7 +43,7 @@ Renderer = function(canvas) {
 			
 			var resizeCanvas =  function(){
 				ctx.canvas.width  = window.innerWidth*0.7;
-				ctx.canvas.height = window.innerHeight*0.9;
+				ctx.canvas.height = window.innerHeight*0.78;
 				particleSystem.screenSize(canvas.width, canvas.height);
 			};
 			

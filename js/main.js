@@ -23,8 +23,6 @@ function can_be_used_by(x, y){
 }
 
 
-el = 2;//new Everlive('RhGb6ryktMNcAwj9');
-
 loading = false;
 
 function ClearNodes(){
@@ -185,13 +183,13 @@ function FairyCtrl($scope){
 	maj = maj.replace(/(%20)/g, ' ');
 	$scope.getMajor(maj);
 
-	$scope.getMajor(maj);
-
 	$("#Majors1").change(function()
 	{
         //console.log('changed');
         var major = $('#Majors1').val();
         if(major != undefined){
+			selected = null;
+			$('#SelectedSubject').hide();
             loading = true;
             $scope.getMajor($("#Majors1").find(':selected').val());
             window.location.hash = '#' + major.replace(" ", "%20");
@@ -206,9 +204,7 @@ function FairyCtrl($scope){
         if(!loading){
             $('#Majors1').val(window.location.hash.slice(1));
             loading = true;
-            $scope.getMajor($("#Majors1").find(':selected').val());
+            $scope.getMajor($("#Majors1").find(':selected').val());			
         }
     });
-
-    setTimeout(function(){ $('#Majors1').val(maj); }, 2000);
 }
