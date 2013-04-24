@@ -13,16 +13,9 @@ function AdminCtrl($scope){
 					var parsedData = data;
 					var subjects = parsedData.Result;
 
-					for(var i = 0; i < subjects.length; i++){
-                        var subject = subjects[i];
-						$scope.subjects.push(subject);
-                        if(subject.Provides) {
-                            $scope.tags = _.union($scope.tags, subject.Provides);
-                        }
-                        if(subject.Depends) {
-                            $scope.tags = _.union($scope.tags, subject.Depends);
-                        }
-                    }
+                    var allProvides = _.union.apply(this, _.pluck(subjects, 'Provides'));
+                    var allDepends = _.union.apply(this, _.pluck(subjects, 'Depends'));
+                    $scope.tags = _.union(allProvides, allDepends);
 				});
             },
             error: function(error){
