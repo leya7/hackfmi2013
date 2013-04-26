@@ -1,0 +1,33 @@
+<!doctype html>
+<html ng-app>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>
+    <!--<script src="libs/everlive.js"></script>-->
+    <script src="js/admin.js"></script>
+    <link rel="stylesheet" href="css/basic.css" type="text/css">
+	<link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/customize.css" rel="stylesheet">
+    <meta charset='utf-8'>
+  </head>
+  <body class="grab_excess_space">
+		<div ng-controller="AdminCtrl" style="padding-top: 70px; padding-left: 50px;">
+			Tags:
+			<select>
+				<option ng-repeat="tag in tags" value="{{tag}}">
+					{{tag}}
+				</option>
+			</select>
+			Total: {{tags.length}}
+		</div>
+	<footer>
+        <p>&copy; Феичките</p>
+   </footer>
+	
+    <script src="js/renderer.js"></script>
+    <script src="libs/arbor.js"></script>
+	<script src="js/bootstrap.js"></script>
+
+  </body>
+</html>
