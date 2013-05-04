@@ -1,6 +1,6 @@
 function AdminCtrl($scope){
     $scope.subjects = [];
-    $scope.tags = ['баба', 'дада', 'ада'];
+    $scope.tags = [];
 
     $scope.getAllSubjects = function(){
         $.ajax({
@@ -9,18 +9,14 @@ function AdminCtrl($scope){
 			dataType: 'json',
             success: function(data) {
 				$scope.$apply(function() {
-					//var parsedData = $.parseJSON(data);
 					var parsedData = data;
 					var subjects = parsedData.Result;
 
                     var allProvides = _.union.apply(this, _.pluck(subjects, 'Provides'));
                     var allDepends = _.union.apply(this, _.pluck(subjects, 'Depends'));
-                    //$scope.tags = _.union(allProvides, allDepends);
-                    
-                    // ???
-                    //var encodedTags = _.map($scope.tags, encodeURI);
-                    //$scope.tags = ['баба', 'дада', 'ада'];
+                    $scope.tags = _.compact(_.union(allProvides, allDepends));
 
+                    g_tags = $scope.tags;
 
                     $( "#tags" ).autocomplete({
                         source: $scope.tags

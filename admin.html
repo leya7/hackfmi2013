@@ -15,17 +15,11 @@
    </head>
   <body class="grab_excess_space">
 		<div ng-controller="AdminCtrl" style="padding-top: 70px; padding-left: 50px;">
-			Tags:
-			<select>
-				<option ng-repeat="tag in tags" value="{{tag}}">
-					{{tag}}
-				</option>
-			</select>
-			Total: {{tags.length}}
       <div class="ui-widget">
         <label for="tags">Tags: </label>
         <input id="tags" />
       </div>
+      Total: {{tags.length}}
 		</div>
 	<footer>
         <p>&copy; Феичките</p>
