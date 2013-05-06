@@ -2,9 +2,9 @@
 <html ng-app>
   <head>
     <meta charset="unicode" />
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
     <script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>
     <!--<script src="libs/everlive.js"></script>-->
     <script src="js/admin.js"></script>
@@ -15,11 +15,26 @@
    </head>
   <body class="grab_excess_space">
 		<div ng-controller="AdminCtrl" style="padding-top: 70px; padding-left: 50px;">
-      <div class="ui-widget">
-        <label for="tags">Tags: </label>
-        <input id="tags" />
-      </div>
-      Total: {{tags.length}}
+			<form ng-submit="submitNewSubject()">
+				<div class="ui-widget">
+					<label for="name">Name: </label>
+					<input id="name" ng-model="newSubject.name" />
+				</div>
+				<div class="ui-widget">
+					<label for="provides">Provides: </label>
+					<input id="provides" class="tags" />
+				</div>
+				<div class="ui-widget">
+					<label for="depends">Depends: </label>
+					<input id="depends" class="tags" />
+				</div>
+				<div class="ui-widget">
+					<label for="descr">Description: </label>
+					<textarea id="descr"  ng-model="newSubject.descr" ></textarea>
+				</div>
+				<input class="btn-primary" type="submit" value="Submit">
+			</form>
+			Total tags: {{tags.length}}
 		</div>
 	<footer>
         <p>&copy; Феичките</p>
