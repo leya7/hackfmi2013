@@ -21,3 +21,15 @@ canvas {
     height: 80%;
 	margin-top: -200px;
 }
+
+#name{
+    width: 400px;
+}
+
+.tags {
+    width: 400px;
+}
+
+#descr {
+    width: 400px;   
+}
